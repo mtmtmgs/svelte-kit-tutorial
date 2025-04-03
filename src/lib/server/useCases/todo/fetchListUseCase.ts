@@ -1,4 +1,4 @@
-import type { TodoFetchListService } from '../../services';
+import type { ITodoFetchListService } from '../../services/todo';
 import type { GetTodoListResponse } from '../../types/responses/todo';
 
 export interface ITodoFetchListUseCase {
@@ -6,7 +6,7 @@ export interface ITodoFetchListUseCase {
 }
 
 export class TodoFetchListUseCase implements ITodoFetchListUseCase {
-  constructor(private readonly todoFetchListService: TodoFetchListService) {}
+  constructor(private readonly todoFetchListService: ITodoFetchListService) {}
 
   async execute(): Promise<GetTodoListResponse> {
     const result = await this.todoFetchListService.findAll();
