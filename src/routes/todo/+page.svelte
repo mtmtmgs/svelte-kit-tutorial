@@ -29,19 +29,14 @@
         placeholder="新しいTodoを入力"
         class="mr-2 rounded border border-gray-300 p-2"
       />
-      <button on:click={addTodo} class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700">
-        追加
-      </button>
+      <button on:click={addTodo} class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"> 追加 </button>
     </div>
   </div>
   <ul class="list-none p-4">
     {#each todos as todo (todo.id)}
       <li class="flex items-center justify-between border-b border-gray-300 py-2">
         <span>{todo.text}</span>
-        <button
-          on:click={() => removeTodo(todo.id)}
-          class="rounded bg-red-500 px-2 py-1 text-white hover:bg-red-700"
-        >
+        <button on:click={() => removeTodo(todo.id)} class="rounded bg-red-500 px-2 py-1 text-white hover:bg-red-700">
           削除
         </button>
       </li>

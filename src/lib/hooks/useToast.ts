@@ -13,11 +13,7 @@ type Toast = {
 export const toasts = writable<Toast[]>([]);
 
 export function useToast() {
-  const addToast = (
-    type: ToastType,
-    message: string,
-    position: ToastPosition = 'bottom-center'
-  ) => {
+  const addToast = (type: ToastType, message: string, position: ToastPosition = 'bottom-center') => {
     const id = Date.now();
     toasts.update((current) => [...current, { type, message, id, position }]);
     setTimeout(() => removeToast(id), 1000);
