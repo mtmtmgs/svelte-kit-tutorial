@@ -8,4 +8,4 @@ export type TodoItem = {
 
 export type GetTodoListResponse = {
   items: TodoItem[];
-} extends Response
+};

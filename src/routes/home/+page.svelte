@@ -7,7 +7,7 @@
   import type { GetTodoListResponse, TodoItem } from '$lib/server/types/responses/todo';
 
   export const currentComponent = writable<'dashboard' | 'list'>('dashboard');
-  export const todos = writable<TodoItem[]>([]);
+  export const todoItems = writable<TodoItem[]>([]);
 
   let todoListRes: GetTodoListResponse;
   const toast = useToast();
@@ -24,10 +24,10 @@
 
   onMount(async () => {
     try {
-      const response = await fetch('/api/todo');
-      if (response.ok) {
-        todoListRes = await response.json();
-        todos.set(todoListRes?.items || []);
+      const res = await fetch('/api/todo');
+      if (res.ok) {
+        todoListRes = await res.json();
+        todoItems.set(todoListRes?.items || []);
       } else {
         toast.error('Todoリストの取得に失敗しました');
       }
@@ -69,9 +69,7 @@
       <h2 class="text-xl font-bold">hoge</h2>
       <div class="space-x-2">
         <button class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"> 検索 </button>
-        <button class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600">
-          新規作成
-        </button>
+        <button class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"> 新規作成 </button>
       </div>
     </header>
     <section class="rounded bg-green-200 p-4">
@@ -81,7 +79,7 @@
 
       <h3 class="mt-4 text-lg font-bold">Todoリスト</h3>
       <ul class="mt-2 space-y-2">
-        {#each $todos as todo}
+        {#each $todoItems as todo}
           <li class="rounded bg-white p-2 shadow">
             <span class={todo.completed ? 'line-through' : ''}>{todo.title}</span>
           </li>

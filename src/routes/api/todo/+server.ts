@@ -1,11 +1,14 @@
 import { json } from '@sveltejs/kit';
-import { TodoFetchListUseCase } from '../../../lib/server/useCases';
-import { TodoFetchListService } from '../../../lib/server/services';
-import type { GetTodoListResponse } from '../../../lib/server/types/responses/todo';
+import { TodoFetchListUseCase } from '../../../lib/server/useCases/todo';
+import { TodoFetchListService } from '../../../lib/server/services/todo';
+import { TodoMapper } from '../../../lib/server/mappers';
 
-export const GET = async (): Promise<GetTodoListResponse> => {
-  const todoFetchListUseCase = new TodoFetchListUseCase(new TodoFetchListService());
-  const res = await todoFetchListUseCase.execute();
+const todoFetchListUseCase = new TodoFetchListUseCase(new TodoFetchListService());
+const todoMapper = new TodoMapper();
+
+export const GET = async (): Promise<Response> => {
+  const result = await todoFetchListUseCase.execute();
+  const res = todoMapper.toGetTodoListResponse(result);
   return json(res);
 };
 
