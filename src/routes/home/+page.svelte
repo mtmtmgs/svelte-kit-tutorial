@@ -1,12 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { writable } from 'svelte/store';
   import Dashboard from './Dashboard.svelte';
   import List from './List.svelte';
+  import { useToast } from '$lib/hooks/useToast';
   import type { GetTodoListResponse, TodoItem } from '$lib/server/types/responses/todo';
 
-  let currentComponent = 'dashboard';
+  export const currentComponent = writable<'dashboard' | 'list'>('dashboard');
+  export const todos = writable<TodoItem[]>([]);
+
   let todoListRes: GetTodoListResponse;
-  let todos: TodoItem[];
+  const toast = useToast();
 
   const components = {
     dashboard: Dashboard,
@@ -15,7 +19,7 @@
   type ComponentName = keyof typeof components;
 
   function setComponent(component: ComponentName) {
-    currentComponent = component;
+    currentComponent.set(component);
   }
 
   onMount(async () => {
@@ -23,12 +27,12 @@
       const response = await fetch('/api/todo');
       if (response.ok) {
         todoListRes = await response.json();
-        todos = todoListRes?.items || [];
+        todos.set(todoListRes?.items || []);
       } else {
-        console.error('Failed to fetch todos');
+        toast.error('Todoリストの取得に失敗しました');
       }
     } catch (error) {
-      console.error('Error fetching todos:', error);
+      toast.error('Todoリストの取得中にエラーが発生しました');
     }
   });
 </script>
@@ -71,13 +75,13 @@
       </div>
     </header>
     <section class="rounded bg-green-200 p-4">
-      {#if components.hasOwnProperty(currentComponent)}
-        <svelte:component this={components[currentComponent as keyof typeof components]} />
+      {#if $currentComponent in components}
+        <svelte:component this={components[$currentComponent]} />
       {/if}
 
       <h3 class="mt-4 text-lg font-bold">Todoリスト</h3>
       <ul class="mt-2 space-y-2">
-        {#each todos as todo}
+        {#each $todos as todo}
           <li class="rounded bg-white p-2 shadow">
             <span class={todo.completed ? 'line-through' : ''}>{todo.title}</span>
           </li>
