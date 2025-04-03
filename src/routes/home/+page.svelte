@@ -1,4 +1,13 @@
 <script lang="ts">
+  import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper } from 'flowbite-svelte';
+  import {
+    ChartPieSolid,
+    GridSolid,
+    MailBoxSolid,
+    UserSolid,
+    ArrowRightToBracketOutline,
+    EditOutline
+  } from 'flowbite-svelte-icons';
   import { onMount } from 'svelte';
   import { writable } from 'svelte/store';
   import Dashboard from './Dashboard.svelte';
@@ -9,6 +18,7 @@
   export const currentComponent = writable<'dashboard' | 'list'>('dashboard');
   export const todoItems = writable<TodoItem[]>([]);
 
+  let spanClass = 'flex-1 ms-3 whitespace-nowrap';
   let todoListRes: GetTodoListResponse;
   const toast = useToast();
 
@@ -39,29 +49,68 @@
 
 <div class="flex h-screen">
   <!-- サイドバー -->
-  <aside class="h-full w-1/4 overflow-y-auto bg-green-100 p-4">
-    <h1 class="mb-4 text-lg font-bold">管理システム</h1>
-    <nav>
-      <ul class="space-y-2">
-        <li>
-          <button
-            on:click={() => setComponent('dashboard')}
-            class="block w-full rounded bg-green-500 p-2 text-left text-white hover:bg-green-600"
-          >
-            ダッシュボード
-          </button>
-        </li>
-        <li>
-          <button
-            on:click={() => setComponent('list')}
-            class="block w-full rounded bg-green-500 p-2 text-left text-white hover:bg-green-600"
-          >
-            一覧
-          </button>
-        </li>
-      </ul>
-    </nav>
-  </aside>
+  <Sidebar>
+    <SidebarWrapper>
+      <SidebarGroup>
+        <SidebarItem label="Dashboard" on:click={() => setComponent('dashboard')}>
+          <svelte:fragment slot="icon">
+            <ChartPieSolid
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+        </SidebarItem>
+        <SidebarItem label="todo" {spanClass} on:click={() => setComponent('list')}>
+          <svelte:fragment slot="icon">
+            <GridSolid
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+          <svelte:fragment slot="subtext">
+            <span
+              class="ms-3 inline-flex items-center justify-center rounded-full bg-gray-200 px-2 text-sm font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-300"
+            >
+              Pro
+            </span>
+          </svelte:fragment>
+        </SidebarItem>
+        <SidebarItem label="Inbox" {spanClass}>
+          <svelte:fragment slot="icon">
+            <MailBoxSolid
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+          <svelte:fragment slot="subtext">
+            <span
+              class="text-primary-600 bg-primary-200 dark:bg-primary-900 dark:text-primary-200 ms-3 inline-flex h-3 w-3 items-center justify-center rounded-full p-3 text-sm font-medium"
+            >
+              3
+            </span>
+          </svelte:fragment>
+        </SidebarItem>
+        <SidebarItem label="Sidebar" href="/docs/components/sidebar">
+          <svelte:fragment slot="icon">
+            <UserSolid
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+        </SidebarItem>
+        <SidebarItem label="Sign In">
+          <svelte:fragment slot="icon">
+            <ArrowRightToBracketOutline
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+        </SidebarItem>
+        <SidebarItem label="Sign Up">
+          <svelte:fragment slot="icon">
+            <EditOutline
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+        </SidebarItem>
+      </SidebarGroup>
+    </SidebarWrapper>
+  </Sidebar>
 
   <!-- メインコンテンツ -->
   <main class="flex-1 bg-gray-100 p-4">
