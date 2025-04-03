@@ -1,8 +1,12 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import Dashboard from './Dashboard.svelte';
   import List from './List.svelte';
+  import type { GetTodoListResponse, TodoItem } from '$lib/server/types/responses/todo';
 
   let currentComponent = 'dashboard';
+  let todoListRes: GetTodoListResponse;
+  let todos: TodoItem[];
 
   const components = {
     dashboard: Dashboard,
@@ -13,6 +17,20 @@
   function setComponent(component: ComponentName) {
     currentComponent = component;
   }
+
+  onMount(async () => {
+    try {
+      const response = await fetch('/api/todo');
+      if (response.ok) {
+        todoListRes = await response.json();
+        todos = todoListRes?.items || [];
+      } else {
+        console.error('Failed to fetch todos');
+      }
+    } catch (error) {
+      console.error('Error fetching todos:', error);
+    }
+  });
 </script>
 
 <div class="flex h-screen">
@@ -54,8 +72,17 @@
     </header>
     <section class="rounded bg-green-200 p-4">
       {#if components.hasOwnProperty(currentComponent)}
-        <svelte:component this={components[currentComponent]} />
+        <svelte:component this={components[currentComponent as keyof typeof components]} />
       {/if}
+
+      <h3 class="mt-4 text-lg font-bold">Todoリスト</h3>
+      <ul class="mt-2 space-y-2">
+        {#each todos as todo}
+          <li class="rounded bg-white p-2 shadow">
+            <span class={todo.completed ? 'line-through' : ''}>{todo.title}</span>
+          </li>
+        {/each}
+      </ul>
     </section>
   </main>
 </div>
