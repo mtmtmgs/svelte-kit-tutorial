@@ -15,7 +15,10 @@
     "test:unit": "vitest",
     "test": "npm run test:unit -- --run && npm run test:e2e",
     "test:e2e": "playwright test",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:generate": "prisma generate --schema=prisma/mysql/schema.prisma",
+    "prisma:create-migration-file": "prisma migrate dev --create-only --schema=prisma/mysql/schema.prisma --name",
+    "prisma:exec-migrate": "prisma migrate dev --schema=prisma/mysql/schema.prisma",
+    "prisma:reset": "prisma migrate reset --force --skip-seed --schema=prisma/mysql/schema.prisma"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
