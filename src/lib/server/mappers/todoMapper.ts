@@ -1,5 +1,5 @@
-import type { TodoFetchListResult } from '../types/dto/todo';
-import type { GetTodoListResponse } from '../types/responses/todo';
+import type { TodoFetchListResult } from '../types/dto';
+import type { GetTodoListResponse } from '../types/responses';
 
 interface ITodoMapper {
   toGetTodoListResponse(data: any): GetTodoListResponse;

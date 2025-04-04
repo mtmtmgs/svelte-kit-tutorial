@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
-import { TodoFetchListUseCase } from '../../../lib/server/useCases/todo';
-import { TodoFetchListService } from '../../../lib/server/services/todo';
+import { TodoFetchListUseCase } from '../../../lib/server/useCases';
+import { TodoFetchListService } from '../../../lib/server/services';
 import { TodoMapper } from '../../../lib/server/mappers';
 import { TodoRepository } from '../../../lib/server/repositories';
 import { prismaClient } from '../../../../prisma/mysql/client';
