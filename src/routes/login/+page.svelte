@@ -14,9 +14,12 @@
       <small>Signed in as</small><br />
       <strong>{$page.data.session.user?.name ?? 'User'}</strong>
     </div>
-    <SignOut>
-      <div slot="submitButton" class="buttonPrimary">Sign out</div>
-    </SignOut>
+    <pre>{JSON.stringify($page.data.session, null, 2)}</pre>
+    <Button class="mb-2">
+      <SignOut>
+        <div slot="submitButton" class="buttonPrimary">Sign out</div>
+      </SignOut>
+    </Button>
   {:else}
     <div class="m-3 text-red-500">You are not signed in</div>
     <ButtonGroup
