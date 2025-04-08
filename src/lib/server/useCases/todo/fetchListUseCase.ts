@@ -1,5 +1,5 @@
-import type { ITodoFetchListService } from '../../services';
-import type { TodoFetchListResult } from '../../types/dto';
+import type { ITodoFetchListService } from '$lib/server/services';
+import type { TodoFetchListResult } from '$lib/server/types/dto';
 
 export interface ITodoFetchListUseCase {
   execute(): Promise<TodoFetchListResult>;

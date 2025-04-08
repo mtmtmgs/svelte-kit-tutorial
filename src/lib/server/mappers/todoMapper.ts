@@ -1,6 +1,6 @@
 import type { Todo } from '@prisma/client';
-import type { TodoFetchListResult } from '../types/dto';
-import type { GetTodoListResponse } from '../types/responses';
+import type { TodoFetchListResult } from '$lib/server/types/dto';
+import type { GetTodoListResponse } from '$lib/server/types/responses';
 
 interface ITodoMapper {
   toGetTodoListResponse(result: TodoFetchListResult): GetTodoListResponse;

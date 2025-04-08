@@ -1,5 +1,5 @@
 import type { Todo } from '@prisma/client';
-import type { ITodoRepository } from '../../repositories';
+import type { ITodoRepository } from '$lib/server/repositories';
 
 export interface ITodoFetchListService {
   findAll(): Promise<Todo[]>;
