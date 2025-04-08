@@ -13,10 +13,12 @@
   import List from '$lib/components/home/List.svelte';
   import { useToast } from '$lib/hooks/useToast';
   import type { GetTodoListResponse } from '$lib/server/types/responses';
-  import { currentView, todoItems } from '$lib/stores/home';
+  import { useHomeStore } from '$lib/hooks/home/useHomeStore';
 
-  let spanClass = 'flex-1 ms-3 whitespace-nowrap';
+  const { currentView, todoItems } = useHomeStore();
+
   let todoListRes: GetTodoListResponse;
+
   const toast = useToast();
 
   const views = {
@@ -52,7 +54,7 @@
             />
           </svelte:fragment>
         </SidebarItem>
-        <SidebarItem label="todo" {spanClass} on:click={() => currentView.set('list')}>
+        <SidebarItem label="todo" spanClass="flex-1 ms-3 whitespace-nowrap" on:click={() => currentView.set('list')}>
           <svelte:fragment slot="icon">
             <GridSolid
               class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
@@ -66,7 +68,7 @@
             </span>
           </svelte:fragment>
         </SidebarItem>
-        <SidebarItem label="Inbox" {spanClass}>
+        <SidebarItem label="Inbox" spanClass="flex-1 ms-3 whitespace-nowrap">
           <svelte:fragment slot="icon">
             <MailBoxSolid
               class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
