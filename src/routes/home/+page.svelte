@@ -9,28 +9,20 @@
     EditOutline
   } from 'flowbite-svelte-icons';
   import { onMount } from 'svelte';
-  import { writable } from 'svelte/store';
   import Dashboard from './Dashboard.svelte';
   import List from './List.svelte';
   import { useToast } from '$lib/hooks/useToast';
-  import type { GetTodoListResponse, TodoItem } from '$lib/server/types/responses/todo';
-
-  export const currentComponent = writable<'dashboard' | 'list'>('dashboard');
-  export const todoItems = writable<TodoItem[]>([]);
+  import type { GetTodoListResponse } from '$lib/server/types/responses';
+  import { currentView, todoItems } from '$lib/stores/home';
 
   let spanClass = 'flex-1 ms-3 whitespace-nowrap';
   let todoListRes: GetTodoListResponse;
   const toast = useToast();
 
-  const components = {
+  const views = {
     dashboard: Dashboard,
     list: List
   };
-  type ComponentName = keyof typeof components;
-
-  function setComponent(component: ComponentName) {
-    currentComponent.set(component);
-  }
 
   onMount(async () => {
     try {
@@ -41,7 +33,8 @@
       } else {
         toast.error('Todoリストの取得に失敗しました');
       }
-    } catch (error) {
+    } catch (e) {
+      console.error('Error fetching todo list:', e);
       toast.error('Todoリストの取得中にエラーが発生しました');
     }
   });
@@ -52,14 +45,14 @@
   <Sidebar>
     <SidebarWrapper>
       <SidebarGroup>
-        <SidebarItem label="Dashboard" on:click={() => setComponent('dashboard')}>
+        <SidebarItem label="Dashboard" on:click={() => currentView.set('dashboard')}>
           <svelte:fragment slot="icon">
             <ChartPieSolid
               class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             />
           </svelte:fragment>
         </SidebarItem>
-        <SidebarItem label="todo" {spanClass} on:click={() => setComponent('list')}>
+        <SidebarItem label="todo" {spanClass} on:click={() => currentView.set('list')}>
           <svelte:fragment slot="icon">
             <GridSolid
               class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
@@ -122,13 +115,13 @@
       </div>
     </header>
     <section class="rounded bg-green-200 p-4">
-      {#if $currentComponent in components}
-        <svelte:component this={components[$currentComponent]} />
+      {#if $currentView in views}
+        <svelte:component this={views[$currentView]} />
       {/if}
 
       <h3 class="mt-4 text-lg font-bold">Todoリスト</h3>
       <ul class="mt-2 space-y-2">
-        {#each $todoItems as todo}
+        {#each $todoItems as todo (todo.id)}
           <li class="rounded bg-white p-2 shadow">
             <span class={todo.completed ? 'line-through' : ''}>{todo.title}</span>
           </li>
