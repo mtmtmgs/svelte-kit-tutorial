@@ -1,13 +1,8 @@
 <script>
   import { Button, Input, Sidebar, SidebarGroup, SidebarItem, SidebarWrapper } from 'flowbite-svelte';
-  import { writable } from 'svelte/store';
+  import { useChatStore } from '$lib/hooks/chat/useChatStore';
 
-  export const messages = writable([
-    { sender: 'user', text: 'こんにちは！' },
-    { sender: 'bot', text: 'こんにちは！どのようにお手伝いできますか？' }
-  ]);
-
-  export const newMessage = writable('');
+  const { messages, newMessage } = useChatStore();
 
   function sendMessage() {
     newMessage.update((value) => {
@@ -38,7 +33,7 @@
   <div class="flex flex-grow flex-col bg-gray-900 text-white">
     <!-- チャットウィンドウ -->
     <div class="flex-1 space-y-4 overflow-y-auto p-4">
-      {#each $messages as { sender, text }}
+      {#each $messages as { sender, text }, index (index)}
         <div class="flex {sender === 'user' ? 'justify-end' : 'justify-start'}">
           <div class="max-w-xs rounded-lg bg-gray-700 p-3">
             <p class="text-sm">{text}</p>

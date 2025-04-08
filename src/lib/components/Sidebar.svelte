@@ -9,7 +9,7 @@
 
 <nav class="sidebar">
   <ul>
-    {#each items as item}
+    {#each items as item, index (index)}
       <li><a href={item.href}>{item.label}</a></li>
     {/each}
   </ul>
