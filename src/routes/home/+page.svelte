@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper } from 'flowbite-svelte';
-  import {
-    ChartPieSolid,
-    GridSolid,
-    MailBoxSolid,
-    UserSolid,
-    ArrowRightToBracketOutline,
-    EditOutline
-  } from 'flowbite-svelte-icons';
-  import { onMount } from 'svelte';
   import Dashboard from '$lib/components/home/Dashboard.svelte';
   import List from '$lib/components/home/List.svelte';
+  import { useHomeStore } from '$lib/hooks/home/useHomeStore';
   import { useToast } from '$lib/hooks/useToast';
   import type { GetTodoListResponse } from '$lib/server/types/responses';
-  import { useHomeStore } from '$lib/hooks/home/useHomeStore';
+  import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper } from 'flowbite-svelte';
+  import {
+    ArrowRightToBracketOutline,
+    ChartPieSolid,
+    EditOutline,
+    GridSolid,
+    MailBoxSolid,
+    UserSolid
+  } from 'flowbite-svelte-icons';
+  import { onMount } from 'svelte';
 
   const { currentView, todoItems } = useHomeStore();
 

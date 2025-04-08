@@ -1,7 +1,8 @@
-import prettier from 'eslint-config-prettier';
-import js from '@eslint/js';
 import { includeIgnoreFile } from '@eslint/compat';
+import js from '@eslint/js';
+import prettier from 'eslint-config-prettier';
 import svelte from 'eslint-plugin-svelte';
+import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
@@ -20,9 +21,18 @@ export default ts.config(
     languageOptions: {
       globals: { ...globals.browser, ...globals.node }
     },
+    plugins: {
+      'unused-imports': unusedImports
+    },
     rules: {
       'no-undef': 'off',
-      '@typescript-eslint/no-explicit-any': 'error'
+      '@typescript-eslint/no-explicit-any': 'error',
+      'unused-imports/no-unused-imports': 'error'
+    },
+    settings: {
+      'import/resolver': {
+        typescript: {}
+      }
     }
   },
   {
