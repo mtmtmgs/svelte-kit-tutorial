@@ -4,17 +4,35 @@
 
   const { messages, newMessage } = useChatStore();
 
-  function sendMessage() {
-    newMessage.update((value) => {
-      if (value.trim() !== '') {
-        messages.update((msgs) => [...msgs, { sender: 'user', text: value }]);
-        setTimeout(() => {
-          messages.update((msgs) => [...msgs, { sender: 'bot', text: 'それは興味深いですね！' }]);
-        }, 1000);
+  const sendMessage = async () => {
+    const userMessage = $newMessage.trim();
+    if (userMessage === '') return;
+
+    // ユーザーのメッセージを追加
+    messages.update((msgs) => [...msgs, { sender: 'user', text: userMessage }]);
+    newMessage.set('');
+
+    try {
+      // APIにPOSTリクエストを送信
+      const response = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: userMessage })
+      });
+
+      if (!response.ok) {
+        throw new Error('APIリクエストに失敗しました');
       }
-      return '';
-    });
-  }
+
+      const data = await response.json();
+
+      // Botのメッセージを追加
+      messages.update((msgs) => [...msgs, { sender: 'bot', text: data.text || 'エラーが発生しました。' }]);
+    } catch (error) {
+      console.error(error);
+      messages.update((msgs) => [...msgs, { sender: 'bot', text: 'エラーが発生しました。' }]);
+    }
+  };
 </script>
 
 <div class="flex h-screen font-sans">
