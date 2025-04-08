@@ -9,8 +9,8 @@
     EditOutline
   } from 'flowbite-svelte-icons';
   import { onMount } from 'svelte';
-  import Dashboard from './Dashboard.svelte';
-  import List from './List.svelte';
+  import Dashboard from '$lib/components/home/Dashboard.svelte';
+  import List from '$lib/components/home/List.svelte';
   import { useToast } from '$lib/hooks/useToast';
   import type { GetTodoListResponse } from '$lib/server/types/responses';
   import { currentView, todoItems } from '$lib/stores/home';
