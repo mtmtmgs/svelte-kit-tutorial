@@ -4,7 +4,6 @@
   import { Button, ButtonGroup } from 'flowbite-svelte';
 </script>
 
-<h1 class="m-5">SvelteKit Auth Example</h1>
 <div class="flex h-screen flex-col items-center justify-center">
   {#if $page.data.session}
     {#if $page.data.session.user?.image}
