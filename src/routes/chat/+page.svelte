@@ -1,36 +1,59 @@
-<script>
+<script lang="ts">
   import { Button, Input, Sidebar, SidebarGroup, SidebarItem, SidebarWrapper } from 'flowbite-svelte';
   import { useChatStore } from '$lib/hooks/chat/useChatStore';
 
-  const { messages, newMessage } = useChatStore();
+  const { messages, newMessage, currentBotMessage } = useChatStore();
 
   const sendMessage = async () => {
     const userMessage = $newMessage.trim();
     if (userMessage === '') return;
 
-    // ユーザーのメッセージを追加
     messages.update((msgs) => [...msgs, { sender: 'user', text: userMessage }]);
     newMessage.set('');
 
     try {
-      // APIにPOSTリクエストを送信
-      const response = await fetch('/api/ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: userMessage })
-      });
-
-      if (!response.ok) {
-        throw new Error('APIリクエストに失敗しました');
-      }
-
-      const data = await response.json();
-
-      // Botのメッセージを追加
-      messages.update((msgs) => [...msgs, { sender: 'bot', text: data.text || 'エラーが発生しました。' }]);
+      await loadStream(userMessage);
     } catch (error) {
       console.error(error);
       messages.update((msgs) => [...msgs, { sender: 'bot', text: 'エラーが発生しました。' }]);
+    }
+  };
+
+  const loadStream = async (prompt: string) => {
+    const res = await fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+
+    const reader = res.body?.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    if (!reader) {
+      messages.update((msgs) => [...msgs, { sender: 'bot', text: '結果を読み込めませんでした。' }]);
+      return;
+    }
+
+    currentBotMessage.set('');
+    messages.update((msgs) => [...msgs, { sender: 'bot', text: $currentBotMessage }]);
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) {
+        break;
+      }
+      buffer += decoder.decode(value, { stream: true });
+
+      currentBotMessage.update((msg) => msg + buffer);
+
+      messages.update((msgs) => {
+        const updatedMsgs = [...msgs];
+        updatedMsgs[updatedMsgs.length - 1].text = $currentBotMessage;
+        return updatedMsgs;
+      });
+
+      buffer = '';
     }
   };
 </script>

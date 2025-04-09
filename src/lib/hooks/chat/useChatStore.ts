@@ -1,8 +1,9 @@
-import { messages, newMessage } from '$lib/stores/chat';
+import { messages, newMessage, currentBotMessage } from '$lib/stores/chat';
 
 export const useChatStore = () => {
   return {
     messages,
-    newMessage
+    newMessage,
+    currentBotMessage
   };
 };

@@ -6,3 +6,5 @@ export const messages = writable([
 ]);
 
 export const newMessage = writable('');
+
+export const currentBotMessage = writable('');
