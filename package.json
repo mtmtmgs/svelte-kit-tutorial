@@ -69,7 +69,9 @@
     "ai": "^4.3.3",
     "flowbite": "^3.1.2",
     "flowbite-svelte": "^0.48.5",
-    "flowbite-svelte-icons": "^2.1.0"
+    "flowbite-svelte-icons": "^2.1.0",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.9.1"
   },
   "lint-staged": {
     "*.{ts,tsx,svelte}": [
