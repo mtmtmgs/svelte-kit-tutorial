@@ -1,6 +1,7 @@
+import 'reflect-metadata';
+import { todoFetchListUseCase } from '$lib/server/diContainer';
 import { TodoMapper } from '$lib/server/mappers';
 import { json } from '@sveltejs/kit';
-import { todoFetchListUseCase } from '$lib/server/diContainer';
 
 const todoMapper = new TodoMapper();
 
