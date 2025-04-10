@@ -2,22 +2,19 @@ import { PrismaClient } from '@prisma/client';
 import 'reflect-metadata';
 import { injectable } from 'tsyringe';
 
-export interface IMySQLClient extends PrismaClient {
-  connect(): Promise<void>;
-  disconnect(): Promise<void>;
+export interface IMySQLClient {
+  getPrismaClient(): PrismaClient;
 }
 
 @injectable()
-export class MySQLClient extends PrismaClient implements IMySQLClient {
+export class MySQLClient implements IMySQLClient {
+  private prisma: PrismaClient;
+
   constructor() {
-    super();
+    this.prisma = new PrismaClient();
   }
 
-  async connect(): Promise<void> {
-    await this.$connect();
-  }
-
-  async disconnect(): Promise<void> {
-    await this.$disconnect();
+  getPrismaClient(): PrismaClient {
+    return this.prisma;
   }
 }
