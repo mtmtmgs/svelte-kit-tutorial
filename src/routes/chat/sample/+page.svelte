@@ -25,11 +25,9 @@
           {#each chat.messages as message (message.id)}
             <li class="flex" class:justify-end={message.role === 'user'} class:justify-start={message.role !== 'user'}>
               <div
-                class="max-w-xs rounded-2xl p-3 shadow"
-                class:bg-blue-500={message.role === 'user'}
-                class:text-white={message.role === 'user'}
-                class:bg-gray-200={message.role !== 'user'}
-                class:text-gray-800={message.role !== 'user'}
+                class="max-w-xs rounded-2xl p-3 text-gray-800 shadow"
+                class:bg-gray-200={message.role === 'user'}
+                class:bg-gray-50={message.role !== 'user'}
               >
                 <span>{message.content}</span>
               </div>
@@ -44,7 +42,7 @@
       <div class="mx-auto w-full max-w-4xl">
         <form onsubmit={chat.handleSubmit} class="flex items-center space-x-2">
           <Textarea bind:value={chat.input} class="h-12 flex-1 rounded-xl" placeholder="質問してみましょう" />
-          <Button type="submit" class=" h-12 bg-blue-500 hover:bg-blue-600">送信</Button>
+          <Button type="submit" class="h-12 bg-gray-900 hover:bg-gray-600">送信</Button>
         </form>
       </div>
     </div>
