@@ -7,15 +7,13 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 
 // clients
-container.registerSingleton(INTERFACE_SYMBOLS.CLIENT.IMySQLClient, MySQLClient).resolve(MySQLClient);
+container.registerSingleton(INTERFACE_SYMBOLS.CLIENT.IMySQLClient, MySQLClient);
 
 // repositories
-container.registerSingleton(INTERFACE_SYMBOLS.REPOSITORY.ITodoRepository, TodoRepository).resolve(TodoRepository);
+container.registerSingleton(INTERFACE_SYMBOLS.REPOSITORY.ITodoRepository, TodoRepository);
 
 // services
-container
-  .registerSingleton(INTERFACE_SYMBOLS.SERVICE.ITodoFetchListService, TodoFetchListService)
-  .resolve(TodoFetchListService);
+container.registerSingleton(INTERFACE_SYMBOLS.SERVICE.ITodoFetchListService, TodoFetchListService);
 
 // use cases
 export const todoFetchListUseCase = container
