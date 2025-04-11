@@ -16,6 +16,6 @@ container.registerSingleton(INTERFACE_SYMBOLS.REPOSITORY.ITodoRepository, TodoRe
 container.registerSingleton(INTERFACE_SYMBOLS.SERVICE.ITodoFetchListService, TodoFetchListService);
 
 // use cases
-export const todoFetchListUseCase = container
-  .registerSingleton(INTERFACE_SYMBOLS.USE_CASE.ITodoFetchListUseCase, TodoFetchListUseCase)
-  .resolve(TodoFetchListUseCase);
+export const useCases = {
+  todoFetchListUseCase: container.resolve(TodoFetchListUseCase)
+};

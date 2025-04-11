@@ -7,8 +7,5 @@ export const INTERFACE_SYMBOLS = {
   },
   SERVICE: {
     ITodoFetchListService: Symbol('ITodoFetchListService')
-  },
-  USE_CASE: {
-    ITodoFetchListUseCase: Symbol('ITodoFetchListUseCase')
   }
 };

@@ -1,8 +1,9 @@
-import 'reflect-metadata';
-import { todoFetchListUseCase } from '$lib/server/diContainer';
+import { useCases } from '$lib/server/diContainer';
 import { TodoMapper } from '$lib/server/mappers';
 import { json } from '@sveltejs/kit';
+import 'reflect-metadata';
 
+const { todoFetchListUseCase } = useCases;
 const todoMapper = new TodoMapper();
 
 export const GET = async (): Promise<Response> => {
