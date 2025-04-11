@@ -1,9 +1,9 @@
+import 'reflect-metadata';
 import { INTERFACE_SYMBOLS } from '$lib/server/consts';
 import { TodoRepository } from '$lib/server/repositories';
 import { TodoFetchListService } from '$lib/server/services';
 import { TodoFetchListUseCase } from '$lib/server/useCases';
 import { MySQLClient } from '$prisma/mysql/client';
-import 'reflect-metadata';
 import { container } from 'tsyringe';
 
 // clients
