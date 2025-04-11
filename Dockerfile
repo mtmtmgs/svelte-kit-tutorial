@@ -19,6 +19,6 @@ COPY --from=builder /build/node_modules ./node_modules
 COPY --from=builder /build/.svelte-kit ./.svelte-kit
 COPY --from=builder /build/package.json /build/vite.config.ts ./
 
-EXPOSE 4173
+EXPOSE 8080
 
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0"]
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "8080"]
