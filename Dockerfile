@@ -1,4 +1,4 @@
-FROM node:20.11.0-alpine3.19 as builder
+FROM node:20.11.0-alpine3.19 AS builder
 
 WORKDIR /build
 
@@ -7,11 +7,13 @@ COPY package.json package-lock.json ./
 
 RUN npm install
 
-COPY . .
+COPY src ./src
+COPY static ./static
+COPY .npmrc svelte.config.js tsconfig.json vite.config.ts ./
 
 RUN npm run build
 
-FROM node:20.11.0-alpine3.19 as runtime
+FROM node:20.11.0-alpine3.19 AS runtime
 
 WORKDIR /app
 
