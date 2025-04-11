@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import 'reflect-metadata';
 import { injectable } from 'tsyringe';
+import { PrismaClient } from './generated';
 
 export interface IMySQLClient {
   getPrismaClient(): PrismaClient;

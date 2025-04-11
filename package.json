@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo '' && husky",
     "postinstall": "npm run prisma:generate",
-    "reinstall": "rimraf node_modules && npm install",
+    "reinstall": "rimraf node_modules prisma/*/generated && npm install",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write .",

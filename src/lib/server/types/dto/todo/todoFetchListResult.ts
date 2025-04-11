@@ -1,4 +1,4 @@
-import type { Todo } from '@prisma/client';
+import type { Todo } from '$prisma/mysql/generated';
 
 export type TodoFetchListResult = {
   items: Todo[];

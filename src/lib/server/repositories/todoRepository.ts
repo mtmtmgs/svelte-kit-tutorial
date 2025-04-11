@@ -1,7 +1,7 @@
 import { INTERFACE_SYMBOLS } from '$lib/server/consts';
-import type { PrismaClient, Todo } from '@prisma/client';
+import type { IMySQLClient } from '$prisma/mysql/client';
+import type { PrismaClient, Todo } from '$prisma/mysql/generated';
 import { inject, injectable } from 'tsyringe';
-import type { IMySQLClient } from '../../../../prisma/mysql/client';
 
 export interface ITodoRepository {
   findAll(): Promise<Todo[]>;
