@@ -1,7 +1,7 @@
 import { env } from '$env/dynamic/private';
 import { createOpenAI } from '@ai-sdk/openai';
 
-const MODEL = 'gpt-4o-mini';
+const defaultModel = env.OPEN_AI_DEFAULT_MODEL || '';
 
 const genOpenAI = () => {
   const openai = createOpenAI({
@@ -12,14 +12,14 @@ const genOpenAI = () => {
   return openai;
 };
 
-export const genOpenAIModel = (modelName = MODEL) => {
+export const genOpenAIModel = (modelName = defaultModel) => {
   const openai = genOpenAI();
   const model = openai(modelName);
 
   return model;
 };
 
-export const genOpenAIChatModel = (modelName = MODEL) => {
+export const genOpenAIChatModel = (modelName = defaultModel) => {
   const openai = genOpenAI();
   const chatModel = openai.chat(modelName);
 
