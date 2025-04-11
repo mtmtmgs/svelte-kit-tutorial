@@ -3,7 +3,7 @@ services:
     container_name: app-container
     image: node:20.11.0-alpine3.19
     environment:
-      DATABASE_URL: mysql://root:password@mysql_container:3306/database
+      DATABASE_URL: mysql://root:password@mysql-container:3306/database
     ports:
       - '5174:5173'
     volumes:
@@ -16,7 +16,7 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: mysql_container
+    container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: database
