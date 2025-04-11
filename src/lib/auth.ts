@@ -1,4 +1,4 @@
-import { AUTH_SECRET, AUTH_TRUST_HOST, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import Facebook from '@auth/core/providers/facebook';
 import GitHub from '@auth/core/providers/github';
 import Google from '@auth/core/providers/google';
@@ -7,13 +7,13 @@ import { SvelteKitAuth } from '@auth/sveltekit';
 export const { handle, signIn, signOut } = SvelteKitAuth({
   providers: [
     Google({
-      clientId: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET
     }),
     GitHub({}),
     Facebook({})
   ],
-  secret: AUTH_SECRET,
+  secret: env.AUTH_SECRET,
   session: {
     // strategy: 'jwt',
     maxAge: 60 * 60 * 1
@@ -31,5 +31,5 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   //     return session;
   //   }
   // }
-  trustHost: AUTH_TRUST_HOST === 'true'
+  trustHost: env.AUTH_TRUST_HOST === 'true'
 });

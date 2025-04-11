@@ -1,11 +1,11 @@
-import { OPENAI_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { createOpenAI } from '@ai-sdk/openai';
 
 const MODEL = 'gpt-4o-mini';
 
 const genOpenAI = () => {
   const openai = createOpenAI({
-    apiKey: OPENAI_API_KEY,
+    apiKey: env.OPENAI_API_KEY,
     compatibility: 'strict'
   });
 
