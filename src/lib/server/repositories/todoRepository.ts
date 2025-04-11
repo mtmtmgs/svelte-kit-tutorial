@@ -1,6 +1,6 @@
 import { INTERFACE_SYMBOLS } from '$lib/server/consts';
 import type { IMySQLClient } from '$prisma/mysql/client';
-import type { PrismaClient, Todo } from '$prisma/mysql/generated';
+import type { PrismaClient, Todo } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 
 export interface ITodoRepository {

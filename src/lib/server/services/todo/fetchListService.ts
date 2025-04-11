@@ -1,6 +1,6 @@
 import { INTERFACE_SYMBOLS } from '$lib/server/consts';
 import type { ITodoRepository } from '$lib/server/repositories';
-import type { Todo } from '$prisma/mysql/generated';
+import type { Todo } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 
 export interface ITodoFetchListService {
