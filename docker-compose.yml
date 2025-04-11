@@ -1,4 +1,17 @@
 services:
+  app:
+    container_name: app-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '4174:4173'
+    environment:
+      DATABASE_URL: mysql://root:password@mysql-container:3306/database
+    depends_on:
+      - db
+    tty: true
+
   db:
     image: mysql:8.0
     container_name: mysql-container
