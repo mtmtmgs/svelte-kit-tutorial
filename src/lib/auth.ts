@@ -1,8 +1,8 @@
-import { SvelteKitAuth } from '@auth/sveltekit';
-import Google from '@auth/core/providers/google';
-import GitHub from '@auth/core/providers/github';
+import { AUTH_SECRET, AUTH_TRUST_HOST, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '$env/static/private';
 import Facebook from '@auth/core/providers/facebook';
-import { AUTH_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '$env/static/private';
+import GitHub from '@auth/core/providers/github';
+import Google from '@auth/core/providers/google';
+import { SvelteKitAuth } from '@auth/sveltekit';
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
   providers: [
@@ -17,7 +17,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   session: {
     // strategy: 'jwt',
     maxAge: 60 * 60 * 1
-  }
+  },
   // callbacks: {
   //   async jwt({ token, user, trigger }) {
   //     if (trigger === 'signIn' && user) {
@@ -31,4 +31,5 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   //     return session;
   //   }
   // }
+  trustHost: AUTH_TRUST_HOST === 'true'
 });
