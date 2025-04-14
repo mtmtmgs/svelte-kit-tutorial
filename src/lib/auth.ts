@@ -8,7 +8,12 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   providers: [
     Google({
       clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          scope: 'openid email profile https://www.googleapis.com/auth/spreadsheets.readonly'
+        }
+      }
     }),
     GitHub({}),
     Facebook({})
@@ -31,5 +36,17 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   //     return session;
   //   }
   // }
-  trustHost: env.AUTH_TRUST_HOST === 'true'
+  callbacks: {
+    async jwt({ token, account }) {
+      if (account) {
+        token.access_token = account.access_token;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.id = token.access_token as string; // 一旦
+      return session;
+    }
+  },
+  trustHost: env.AUTH_TRUST_HOST === 'true' // これをtrueにしないと vite preview で見れない
 });

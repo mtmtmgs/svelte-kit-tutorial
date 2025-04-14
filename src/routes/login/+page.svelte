@@ -13,7 +13,9 @@
       <small>Signed in as</small><br />
       <strong>{$page.data.session.user?.name ?? 'User'}</strong>
     </div>
-    <pre>{JSON.stringify($page.data.session, null, 2)}</pre>
+    <div class="m-4 w-full max-w-4xl overflow-x-auto rounded-lg bg-gray-100 p-4">
+      <pre class="break-words whitespace-pre-wrap">{JSON.stringify($page.data.session, null, 2)}</pre>
+    </div>
     <Button class="mb-2">
       <SignOut>
         <div slot="submitButton" class="buttonPrimary">Sign out</div>
