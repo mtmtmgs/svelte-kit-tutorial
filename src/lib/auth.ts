@@ -23,6 +23,9 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     // strategy: 'jwt',
     maxAge: 60 * 60 * 1
   },
+  jwt: {
+    maxAge: 60 * 60 * 1
+  },
   // callbacks: {
   //   async jwt({ token, user, trigger }) {
   //     if (trigger === 'signIn' && user) {
